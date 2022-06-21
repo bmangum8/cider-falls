@@ -1,0 +1,216 @@
+*= completed
+
+*What are the main resources (i.e. tables)? Design your ERD first.
+park areas
+services
+guests - id, first name, last name
+
+*What are the properties of each resource?
+see ERD
+
+*What is the relationship between the resources? If it's many-to-many, what additional data must you design in your ERD?
+join areas with services
+
+
+Which modules should you create?
+*database.js 
+*park areas - id, name, location (included just in case)
+
+*services/join  park areas with services - id, park area Id, services Id
+ 
+*guests - id, park area Id, guests Id--only need first and last names
+
+*(I made ammenities.js just in case)
+
+*main.js
+*index.html
+*css modules: main and details
+
+
+What is the responsibility of each module?
+database- provide data, export functions that create copies of the data in database
+
+park areas- create an html representation of the park areas in a list using a function
+
+services/join park areas with services- create html representation of the serviceIds that match the parkArea service Ids using a function
+
+guests - use a fuction to create html representation of the list of guests in the park
+
+main- create the main html components- invoke the functions created in the other modules. 
+
+index.html- links the html to the scripts/main.js and styles/main.js
+
+
+
+What functions should be in which modules? 
+What is the responsibility of each function?
+What should each function return?
+What is the spcific algorithm for each function? Does the function need parameters? Should it return something?
+
+
+*database- functions that make copies of the data in database
+*export const getAreas = () => {database.areas.map(area => ({...area}))
+} //returns a copy of park areas
+-do same for park services and  guests and joining
+*getServices()
+*getParkServices()
+*getGuests()
+
+
+*did all*park areas
+import getAreas from database
+create a plural-named variable for example areas set to getAreas()
+then export a new function - for exaple Areas
+create a new let variable with HTML name = <html tag> 
+probably <ul>
+do a for of loop. loop over the area of areas (when is the new variable I created and set to getAreas)
+use string interpolation to add string to html.
+the string should include html <li> tag. and include an id for the tag. for example: 
+<li id="area--${area.id}">
+string should also include ${area.name} between the <li> tags
+outside of the for of loop, add closing </ul>
+return the html, close the function with curly bracket
+
+
+
+services/join park areas with services
+import getServices from database
+import getParkServices from database
+import areas from parkAreas.js
+create a plural-named variable, for example services and set to getServices
+create a plural-named variable, for example parkServices and set to getParkServices
+
+
+first: create a function that will find the services that exist at each park area
+
+then export a new function - for example findServices
+will need 2 parameters- the park area and services
+in the function body, create a let variable, 
+for example, servicesInArea and set to null??
+create a for of loop- service of services
+if statement- if the service.id === joinParkWithServices.servicesId
+then the servicesInArea = service
+and return servicesInArea
+
+second:  
+Remember that I have variables areas, services, and parkServices
+will invoke the first function of this module
+this fuction does not need parameters
+
+create and export a function that returns HTML representation of services for each park area.
+Name it for example, availableServices
+create a let html variable and set it to an empty string
+
+add a <ul> tag
+do a for of loop-- for parkService of parkServices
+create a const variable of areaservices = findServices(area, services)
+in the for loop, create html representation
+html += `<li id="service--${service.id}">${service.name}</li>
+add </ul> tag
+return html
+
+
+guests
+import getGuests from database
+export and create function with const of Guests
+function should create html representation of a list of all the guests in the park
+(is there maybe a click event where the location of the guests will need to be accessed?)
+create a let variable with <ul> tag
+create a for of loop, for guest of guests
+use string interpolation to add guests to html
+for example html += `<li id="guest--${guest.id}">${guest.firstName}${guest.lastName}</li>`
+add </ul> tag outside of the for of loop
+return the html
+
+
+main.js
+import areas from parkAreas.js
+import services, availableServices from services.js
+import guests from guests.js
+
+create a const called mainContainer = document.querySelector("#container")
+"container" is the id from index.html-- this is how we connect the js and html representation
+
+create a const applicationHTML= `
+<h1>Title of Park Here</h1>
+<article class="guests">
+<h2>Guests</h2>
+${Guests()} ---this is the function from the guests modual. The function creates an html representation of the list of guests
+</article>
+
+<article class="details">
+<h2>Park Services</h2>
+<section class="detail--details_areas">
+<h3>${area.name}</h3>
+<div class="detail--details_services">
+${availableServices()}
+</div>
+</section> 
+</article>
+`
+//this is my attempt to inculde the services under the area name. By nesting the services in a div, in a section, in an article
+
+mainContainer.innerHTML = applicationHTML
+
+
+
+index.html
+<body>
+<main id="container>
+</main>
+</body>
+
+
+css modules
+copy the code from brewed awakenings or dog-walking:
+main.css
+import styles.details.css
+import fonts from google
+
+What I think I have:
+<li id="area--${area.id}">
+My area id needs to be left aligned- its the names of the park areas. 
+It also needs to be in a grid of 3 columns and 2 rows
+
+
+
+
+body,
+button,
+input,
+select,
+textarea {
+    color:
+    font-family:
+    font-size:
+    line-height:
+}
+
+h1,h2,h3 {
+    font-family:
+    letter-spacing:
+}
+
+for example:
+details.css
+export details, guests
+details (which is park areas)
+display: flex
+flex-direction: row? or column?
+justify-content: left?
+
+
+guests
+display: flex;
+justify-content: right?
+or is it alignment: right?
+border: 2px dotted color
+padding: 2rem
+
+
+header- park name and logo
+footer - phone number, email, address
+
+park areas- 2 rows and 3 columns, main content area, left aligned
+
+guests - list, main content area, right aligned
