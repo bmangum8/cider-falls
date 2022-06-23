@@ -30,26 +30,32 @@ const database = {
         id: 1,
         name: "Chamfort River",
         location: "northeast",
+        guestNumber: 3,
     }, {
         id: 2,
         name: "Lost Wolf Hiking Trail",
         location: "northern",
+        guestNumber: 5,
     }, {
         id: 3,
         name: "Lodge",
         location: "northwest",
+        guestNumber: 2,
     }, {
         id: 4,
         name: "Gander River",
         location: "southwest",
+        guestNumber: 4,
     }, {
         id: 5,
         name: "Campgrounds",
         location: "southern",
+        guestNumber: 1,
     }, {
         id: 6,
         name: "Pine Bluffs Trails",
         location: "southeast",
+        guestNumber: 0,
     }
     ],
 
@@ -269,14 +275,19 @@ getParkServices()
 getGuests()
 */
 
-export const getAreas = () => {database.areas.map(area => ({...area}))
+export const getAreas = () => {
+    return database.areas.map(area => ({...area}))
 } //returns a copy of park areas
 
-export const getServices = () => {database.services.map(service => ({...service}))
+export const getServices = () => {
+    return database.services.map(service => ({...service}))
 } //returns a copy of services
 
-export const getParkServices = () => {database.parkServices.map(parkService => ({...parkService}))
+export const getParkServices = () => {
+    return database.parkServices.map(parkService => ({...parkService}))
 } //returns a copy of services and their park area
 
-export const getGuests = () => {database.guests.map(guest => ({...guest}))
+export const getGuests = () => {
+    return database.guests.map(guest => ({...guest}))
 } //returns a copy of guests
+

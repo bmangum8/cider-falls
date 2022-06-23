@@ -1,0 +1,48 @@
+
+/* within the getAreas function. element of area.name. child element of area_nameList.
+gives styling to the individual child elements */
+.areaName {
+    flex-basis: 20%;
+    border: 1px dotted crimson;
+    padding: 1em;
+    margin: 0.5em;
+    text-align: center; /*center align the text in the boxes*/
+}
+
+
+/* within the getAreas function. parent element of area.name-park areas names.
+acts as the mother duck herding all the ducklings */
+.area_nameList {
+    display: flex;  /*makes the child elements flex*/
+    flex-wrap: wrap; /*makes the child elements wrap*/
+    flex-direction: row; /*puts child elements into rows*/
+}
+
+
+.details {
+    justify-content: space-evenly;
+}
+
+.detail--column {  /*each <section> Park Services, Park Areas, Guests*/
+    flex-basis: 24%;
+    margin: 0 2rem;
+    border: 1px dotted goldenrod;
+    
+}
+
+detail--column details_guests {
+    justify-content: flex-end;
+    align-items: flex-end; /*didn't do anything*/
+}
+
+/*
+.details_areas {
+    border: 1px dotted crimson;
+    padding: 1em;
+    margin: 0.5em;
+}
+
+.assignments {
+    padding: 1rem 5rem;
+} 
+*/
