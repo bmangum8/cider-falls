@@ -19,13 +19,33 @@ import { getAreas } from "./database.js"
 const areas = getAreas()
 
 export const Areas = () => {
-    let html = `<ul>`
+    let html = `<section class="area_nameList">`
 
     for (const area of areas) {
-        html += `<li id="area--${area.id}">${area.name}</li>`
+        html += `<div class="areaName" id="area--${area.id}">${area.name}</div>`
     }
-    html += `</ul>`
+    html += `</section>`
     return html
     }
 
 
+/*
+    *add an event listener- click event
+    *When the title of any area is clicked, the current number of park guests in that area should be displayed.
+*/
+    
+    document.addEventListener(
+        "click",
+        (clickEvent) => {
+            const areaClicked = clickEvent.target
+            if (areaClicked.id.startsWith("area")) {
+                const [, areaId] = areaClicked.id.split("--")
+    
+                for (const area of areas) {
+                    if (area.id === parseInt(areaId)) {
+                        window.alert(`There are ${area.guestNumber} guests in the ${area.name} area.`)
+                    }
+                }
+            }
+        }
+    )

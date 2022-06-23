@@ -57,19 +57,42 @@ What is the spcific algorithm for each function? Does the function need paramete
 *getGuests()
 
 
-*did all*park areas
-import getAreas from database
-create a plural-named variable for example areas set to getAreas()
-then export a new function - for exaple Areas
+*Did all in *park areas*
+*import getAreas from database
+*create a plural-named variable for example areas set to getAreas()
+*then export a new function - for exaple Areas
 create a new let variable with HTML name = <html tag> 
 probably <ul>
 do a for of loop. loop over the area of areas (when is the new variable I created and set to getAreas)
 use string interpolation to add string to html.
 the string should include html <li> tag. and include an id for the tag. for example: 
-<li id="area--${area.id}">
+<li id="area--${area.id}"> //I named things differently than planned
 string should also include ${area.name} between the <li> tags
 outside of the for of loop, add closing </ul>
 return the html, close the function with curly bracket
+*//works! shows park area names in browser
+
+
+*add an event listener- click event
+When the title of any area is clicked, the current number of park guests in that area should be displayed.
+*need to add guestNumber to key pair of areas in database
+//must have an id in html to connect the event listener to
+document.addEventListener(
+    "click",
+    (clickEvent) => {
+        const areaClicked = clickEvent.target
+        if (areaClicked.id.startsWith("area")) {
+            const [, areaId] = areaClicked.id.split("--")
+
+            for (const area of areas) {
+                if (area.id === parseInt(areaId)) {
+                    window.alert(`There are ${area.guestNumber} guests in the ${area.name} area. `)
+                }
+            }
+        }
+    }
+)
+
 
 
 
@@ -77,40 +100,73 @@ services/join park areas with services
 import getServices from database
 import getParkServices from database
 import areas from parkAreas.js
+import getAreas from database
+
 create a plural-named variable, for example services and set to getServices
 create a plural-named variable, for example parkServices and set to getParkServices
 
+*first: create a function that will return the html representation of the list of services
+create and export function - for example Services
+create a let variable with html name = <tag>
+put `Park Services` before for of loop
+do a for of loop. loop over services (which is the variable I set to getServices)
+use string interpolation to add string to html. The string should include an html tag. 
+for example: <p class="services">${service.name}</p>
+return html outside of for loop
+close function with curly bracket
 
-first: create a function that will find the services that exist at each park area
 
-then export a new function - for example findServices
-will need 2 parameters- the park area and services
-in the function body, create a let variable, 
-for example, servicesInArea and set to null??
-create a for of loop- service of services
-if statement- if the service.id === joinParkWithServices.servicesId
-then the servicesInArea = service
-and return servicesInArea
+second: create a function that will find the park Areas that support each service
 
-second:  
-Remember that I have variables areas, services, and parkServices
-will invoke the first function of this module
+create and export function - for example findAreas
+will need 2 parameters, servicesParam and areasParam
+in the function body, create a let variable
+for example, areaServices and set to null
+create for of loop - area of areasParam
+if statement- if areasParam.id === servicesParm.areaId
+then the areaServices = area
+return areaServices
+
+
+
+-----Maybe I dont need this 3rd function -------
+third:  create and export a function that returns HTML representation of services for each park area.
+will invoke the second function of this module
 this fuction does not need parameters
 
-create and export a function that returns HTML representation of services for each park area.
 Name it for example, availableServices
 create a let html variable and set it to an empty string
-
-add a <ul> tag
-do a for of loop-- for parkService of parkServices
-create a const variable of areaservices = findServices(area, services)
+add a <p> tag
+do a for of loop-- for areaService of areaServices
+create a const variable of filterAreas = findAreas(service, areas)
 in the for loop, create html representation
-html += `<li id="service--${service.id}">${service.name}</li>
-add </ul> tag
+html += `<div class="services_areas">${service.name} is available at ${areas.name} </div>
+add </div> tag
 return html
 
 
-guests
+
+forth: create a click event that invokes the third (maybe second function??) function in this module
+
+document.addEventListener(
+    "click",
+    (clickEvent) => {
+        const serviceClicked = clickEvent.target
+        if (serviceClicked.id.startsWith("service")) {
+            const [, serviceId] = serviceClicked.id.split("--")
+
+            for (const service of services) {
+                if (service.id === parseInt(serviceId)) {
+                    window.alert(`${service.name} services ${findAreas(service, areas)}`)
+                }
+            }
+        }
+    }
+)
+
+
+
+*did all in *guests*
 import getGuests from database
 export and create function with const of Guests
 function should create html representation of a list of all the guests in the park
@@ -121,6 +177,7 @@ use string interpolation to add guests to html
 for example html += `<li id="guest--${guest.id}">${guest.firstName}${guest.lastName}</li>`
 add </ul> tag outside of the for of loop
 return the html
+
 
 
 main.js
@@ -139,9 +196,9 @@ ${Guests()} ---this is the function from the guests modual. The function creates
 </article>
 
 <article class="details">
-<h2>Park Services</h2>
+<h2>Park Areas</h2>
 <section class="detail--details_areas">
-<h3>${area.name}</h3>
+<h3>${Areas()}</h3>
 <div class="detail--details_services">
 ${availableServices()}
 </div>
